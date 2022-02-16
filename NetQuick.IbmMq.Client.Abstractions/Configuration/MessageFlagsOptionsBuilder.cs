@@ -5,7 +5,7 @@
     {
         private int _messageFlags = 0;
 
-        /// <summary>MQC
+        /// <summary>
         /// This option allows the message to be broken into segments by the queue manager or indicates that this message is member of a group.
         /// </summary>
         /// <param name="allowSegmentation">If set to true this message is member of a group, If set to false this allows the message to be broken into segments by the queue manager.</param>

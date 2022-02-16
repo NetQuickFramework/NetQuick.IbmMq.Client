@@ -25,11 +25,12 @@ namespace NetQuick.IbmMq.Client
         /// Gets or sets the version of this message
         /// </summary>
         int Version { get; set; }
+        string ReadString(int lenght);
         /// <summary>
         /// Sets the requested message flags for this message.
         /// </summary>
         /// <param name="messageFlagsOptionsBuilderAction"></param>        
-        void SetMessageFlags(Action<MessageFlagsOptionsBuilder> messageFlagsOptionsBuilderAction);
+        void WithMessageFlags(Action<MessageFlagsOptionsBuilder> messageFlagsOptionsBuilderAction);
 
     }
 }

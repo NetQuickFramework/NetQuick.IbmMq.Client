@@ -20,5 +20,6 @@ namespace NetQuick.IbmMq.Client
         /// <param name="message">The message to put on the queue</param>
         /// <param name="sendMessageOptionsBuilderAction">The options to be used when putting the message on a queue.</param>
         void Put(IMqMessage message, Action<PutMessageOptionsBuilder> sendMessageOptionsBuilderAction);
+        void Close();
     }
 }

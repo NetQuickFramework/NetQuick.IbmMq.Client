@@ -5,6 +5,7 @@
         MQOO_INPUT_AS_Q_DEF = 1,
         MQOO_INPUT_SHARED = 2,
         MQOO_INPUT_EXCLUSIVE = 4,
-        MQOO_OUTPUT = 16,
+        MQOO_BROWSE = 8,
+        MQOO_OUTPUT = 16,       
     }
 }

@@ -1,23 +1,30 @@
 ﻿namespace NetQuick.IbmMq.Client
 {
-    public enum QueueInput
-    {
-        AsQueueDefinintion = 1,
-        Shared = 2,
-        Exclusive = 4
-    }
 
     public class QueueOpenOptionsBuilder
     {
         private int _options;
 
+        /// <summary>
+        /// Open queue to get messages using the queue-defined defaults.
+        /// </summary>
+        /// <returns></returns>
         public QueueOpenOptionsBuilder OpenForInputWithDefaultsFromQueueDefinition()
         {
             _options |= (int)MqOpenOptions.MQOO_INPUT_AS_Q_DEF;
             return this;
         }
-
-        public QueueOpenOptionsBuilder OpenWithSharedAccess(bool useSharedAccess = true)
+        public QueueOpenOptionsBuilder OpenForBrowsing()
+        {
+            _options |= (int)MqOpenOptions.MQOO_BROWSE;
+            return this;
+        }
+        /// <summary>
+        /// Opens the queue for input with shared access or exclusive access.
+        /// </summary>
+        /// <param name="useSharedAccess"></param>
+        /// <returns></returns>
+        public QueueOpenOptionsBuilder OpenForInputWithSharedAccess(bool useSharedAccess = true)
         {
             if (useSharedAccess)
             {
@@ -31,6 +38,10 @@
             return this;
         }
 
+        /// <summary>
+        /// Open queue to put messages. Or opens a topic or topic string to publish messages.
+        /// </summary>
+        /// <returns></returns>
         public QueueOpenOptionsBuilder OpenForOutput()
         {
             _options |= (int)MqOpenOptions.MQOO_OUTPUT;

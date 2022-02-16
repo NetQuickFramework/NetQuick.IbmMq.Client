@@ -12,9 +12,14 @@ namespace NetQuick.IbmMq.Client
             _queue = queue;
         }
 
+        public void Close()
+        {
+            _queue.Close();            
+        }
+
         public void Put(IMqMessage message)
         {
-            _queue.Put(message.GetMessage());
+            _queue.Put(((MqMessage)message).GetInternalMessage());
         }
 
         public void Put(IMqMessage message, Action<PutMessageOptionsBuilder> sendMessageOptionsBuilderAction)
@@ -22,15 +27,14 @@ namespace NetQuick.IbmMq.Client
             var optionsBuilder = new PutMessageOptionsBuilder();
             sendMessageOptionsBuilderAction.Invoke(optionsBuilder);
 
-            var options = new MQPutMessageOptions() { Options = optionsBuilder.Build() };       
-         
+            var options = new MQPutMessageOptions() { Options = optionsBuilder.Build() };         
 
             Put(message, options);
         }
 
         public void Put(IMqMessage message, MQPutMessageOptions mqPutMessageOptions)
         {
-            _queue.Put(message.GetMessage(), mqPutMessageOptions);
+            _queue.Put(((MqMessage)message).GetInternalMessage(), mqPutMessageOptions);
         }
 
         public bool IsOpen
@@ -43,7 +47,7 @@ namespace NetQuick.IbmMq.Client
 
         public void Get(IMqMessage message)
         {
-            var innerMessage = message.GetMessage();
+            var innerMessage = ((MqMessage)message).GetInternalMessage();
             _queue.Get(innerMessage);
             message = new MqMessage(innerMessage);
         }
@@ -51,17 +55,5 @@ namespace NetQuick.IbmMq.Client
 
     public class GetMessageOptionsBuilder
     {
-    }
-
-    internal static class MessageConverter
-    {
-        public static MQMessage GetMessage(this IMqMessage internalMessage)
-        {
-            return new MQMessage()
-            {
-                //Encoding = // How to write integer values
-                CharacterSet = internalMessage.Encoding.CodePage
-            };
-        }
-    }    
+    }       
 }
